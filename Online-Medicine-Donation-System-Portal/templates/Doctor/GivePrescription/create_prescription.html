@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Create Prescription</h2>
+          <ol>
+            <li><a href="{% url 'base' %}">Home</a></li>
+            <li>Prescription</li>
+          </ol>
+        </div>
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+    <br>
+    <form method="post" role="form" class="text-center" action="{% url 'doctor_give_prescription' patient.id %}">
+        {% csrf_token %}
+          <div class="form-row">
+            <div class="col-md-9 form-group">
+              {{ form|crispy }}
+            </div>
+          </div>
+          <div class="form-row">
+              <div class="col-md-9 form-group">
+                  <div class="text-center">
+                        <input type="submit" class="form-control" name="submit">
+                  </div>
+              </div>
+          </div>
+    </form>
+<br>
+{% endblock content %}

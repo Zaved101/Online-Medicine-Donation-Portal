@@ -1,0 +1,60 @@
+{% load static %}
+<div class="container d-flex align-items-center">
+
+      <h1 class="logo mr-auto"><a href="{% url 'base' %}">OMDP</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="{% url 'base' %}">Home</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'service' %}">Services</a></li>
+          <li><a href="{% url 'doctor_list' %}">Doctors</a></li>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="{% url 'create_make_appointment' %}">Make an Appointment</a></li>
+
+          {% if request.user.is_authenticated and request.user.is_superuser %}
+            <li><a href="{% url 'super_admin_home' %}">My Dashboard</a></li>
+            <li>
+                 <a href="{% url 'logout' %}"> Sign Out</a>
+            </li>
+          {% elif request.user.is_authenticated and request.user.is_agent %}
+              <li><a href="{% url 'agent_home' %}">My Dashboard</a></li>
+            <li>
+                <a href="{% url 'logout' %}"> Sign Out</a>
+            </li>
+          {% elif request.user.is_authenticated and request.user.is_donor %}
+              <li><a href="{% url 'create_donor_give_medicine_info' %}"> Give Medicine Info</a></li>
+              <li class="drop-down"><a href="">My Dashboard</a>
+                <ul>
+                  <li><a href="{% url 'user_profile' %}">Profile</a></li>
+                  <li><a href="{% url 'user_password_change' %}">Change Password</a></li>
+                  <li><a href="{% url 'list_donor_give_medicine_info' %}">My Give Medicine Info</a></li>
+                  <li><a href="{% url 'logout' %}"> Sign Out</a></li>
+                </ul>
+              </li>
+            <li>
+                <a href="{% url 'logout' %}"> Sign Out</a>
+            </li>
+          {% elif request.user.is_authenticated and request.user.is_doctor %}
+              <li><a href="{% url 'doctor_list_make_appointment_info' %}">View Patient Appointment Info</a></li>
+              <li class="drop-down"><a href="">My Dashboard</a>
+                <ul>
+                  <li><a href="{% url 'user_profile' %}">Profile</a></li>
+                  <li><a href="{% url 'user_password_change' %}">Change Password</a></li>
+                  <li><a href="{% url 'doctor_list_make_appointment_info' %}">View Patient Appointment Info</a></li>
+                  <li><a href="{% url 'logout' %}"> Sign Out</a></li>
+                </ul>
+              </li>
+            <li>
+                <a href="{% url 'logout' %}"> Sign Out</a>
+            </li>
+          {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'donor_registration' %}">Sign Up</a></li>
+          {% endif %}
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>

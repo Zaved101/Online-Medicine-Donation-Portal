@@ -1,0 +1,117 @@
+{% load static %}
+<html lang="en">
+  <head>
+  	<title>Super Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar" style="background-color:#1e365c">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+					<i class="fa fa-bars"></i>
+					<span class="sr-only">Toggle Menu</span>
+					</button>
+				</div>
+				<div class="p-4">
+					<h1>
+						{% if request.user.is_superuser %}
+							<a href="{% url 'super_admin_home' %}" class="logo">Super Admin<span>{{ request.user.username}}</span></a>
+						{% else %}
+							<a href="{% url 'super_admin_home' %}" class="logo">Agent<span>{{ request.user.username}}</span></a>
+						{% endif %}
+					</h1>
+					<ul class="list-unstyled components mb-5">
+
+						  {% if request.user.is_superuser %}
+							  <li class="active">
+									<a href="{% url 'super_admin_home' %}"><span class="fa fa-home mr-3"></span> Home</a>
+							  </li>
+							  <li>
+									<a href="{% url 'list_medicine_name' %}"><span class="fa fa-user mr-3"></span> Manage Medicine Name</a>
+							  </li>
+							  <li>
+									<a href="{% url 'list_medicine_type' %}"><span class="fa fa-adjust mr-3"></span> Manage Medicine Type</a>
+							  </li>
+							  <li>
+									<a href="{% url 'list_medicine_info' %}"><span class="fa fa-user-md mr-3"></span> Manage Medicine Info</a>
+							  </li>
+							  <li>
+									<a href="{% url 'list_doctor' %}"><span class="fa fa-cogs mr-3"></span> Manage Doctor</a>
+							  </li>
+							  <li>
+									<a href="{% url 'super_admin_list_make_appointment_info' %}"><span class="fa fa-briefcase mr-3"></span> Manage Appointments</a>
+							  </li>
+
+							  <li>
+									<a href="{% url 'list_agent' %}"><span class="fa fa-sticky-note mr-3"></span> Agent</a>
+							  </li>
+						      <li>
+									<a href="{% url 'donor_list' %}"><span class="fa fa-sticky-note mr-3"></span> Donor</a>
+							  </li>
+						      <li>
+									<a href="{% url 'view_contact' %}"><span class="fa fa-address-book mr-3"></span> Contact</a>
+							  </li>
+							  <li>
+									<a href="{% url 'profile' %}"><span class="fa fa-user-md mr-3"></span> Profile</a>
+							  </li>
+						      <li>
+									<a href="{% url 'change_password' %}"><span class="fa fa-user-md mr-3"></span> Change Password</a>
+							  </li>
+						      <li>
+									<a href="{% url 'logout' %}"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+							  </li>
+						  {% else %}
+							  <li class="active">
+									<a href="{% url 'agent_home' %}"><span class="fa fa-home mr-3"></span> Home</a>
+							  </li>
+						      <li>
+									<a href="{% url 'agent_list_medicine_info' %}"><span class="fa fa-user-md mr-3"></span> Manage Medicine Info</a>
+							  </li>
+							  <li>
+									<a href="{% url 'list_doctor' %}"><span class="fa fa-cogs mr-3"></span> Manage Doctor</a>
+							  </li>
+						      <li>
+									<a href="{% url 'donor_list' %}"><span class="fa fa-sticky-note mr-3"></span> Donor</a>
+							  </li>
+						      <li>
+									<a href="{% url 'super_admin_list_make_appointment_info' %}"><span class="fa fa-briefcase mr-3"></span> Manage Make Appointment</a>
+							  </li>
+
+							  <li>
+									<a href="{% url 'profile' %}"><span class="fa fa-user-md mr-3"></span> Profile</a>
+							  </li>
+							  <li>
+									<a href="{% url 'change_password' %}"><span class="fa fa-user-md mr-3"></span> Change Password</a>
+							  </li>
+						      <li>
+									<a href="{% url 'logout' %}"><span class="fa fa-sign-out mr-3"></span> Sign Out</a>
+							  </li>
+						  {% endif %}
+					</ul>
+			  </div>
+    		</nav>
+
+        	<!-- Page Content  -->
+		  <div id="content" class="p-4 p-md-5 pt-5">
+			  {% block content %}
+			  <div>
+				  <p class="text-center" style="margin-top:200px;color:#1e365c;font-size:35px;"> <strong>Online Medicine Donation Admin Portal</strong> </p>
+			  </div>
+			  {% endblock  %}
+		  </div>
+		</div>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

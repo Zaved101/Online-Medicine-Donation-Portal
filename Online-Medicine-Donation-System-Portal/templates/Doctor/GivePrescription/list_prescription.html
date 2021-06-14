@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+<!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Patient Prescription Info</h2>
+          <ol>
+            <li><a href="{% url 'base' %}">Home</a></li>
+            <li>Patient Prescription Info</li>
+          </ol>
+        </div>
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+    <br>
+
+<div class="col-md-16 col-sm-16 ">
+    <div class="x_panel">
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-16">
+                    <div class="card-box table-responsive">
+                        {% if not patient %}
+                            <div>No Patient Prescription Info Here! </div>
+                        {% else %}
+
+                            <table class="table" id="datatable-buttons"  style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S. No.</th>
+                                        <th>Patient Email</th>
+                                        <th>Medicine Name</th>
+                                        <th>Medicine Type</th>
+                                        <th>Day Of Medicine</th>
+                                        <th>Medicine Morning Time</th>
+                                        <th>Medicine Lunch Time</th>
+                                        <th>Medicine Dinner Time</th>
+                                        <th>Update</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     {% for patient in patient %}
+                                        <tr>
+                                          <th scope="row">{{ forloop.counter }}</th>
+                                          <th>{{ patient.patient_name.email }}</th>
+                                          <th>{{ patient.medicine_name }}</th>
+                                          <td>{{ patient.medicine_type }}</td>
+                                          <td>{{ patient.day_of_medicine }} days</td>
+                                          <td>
+                                              {% if patient.morning %}
+                                                1
+                                              {% else %}
+                                                0
+                                              {% endif %}
+                                          </td>
+                                          <td>
+                                             {% if patient.lunch %}
+                                                1
+                                              {% else %}
+                                                0
+                                              {% endif %}
+                                          </td>
+                                          <td>
+                                              {% if patient.dinner %}
+                                                1
+                                              {% else %}
+                                                0
+                                              {% endif %}
+                                          </td>
+                                            <td>
+                                                <a href="{% url 'doctor_update_prescription' patient.id %}" class="btn btn-success">Update</a>
+                                            </td>
+                                        </tr>
+                                     {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

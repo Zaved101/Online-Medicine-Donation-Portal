@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+<!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Donor Gives Medicine Info Page</h2>
+          <ol>
+            <li><a href="{% url 'base' %}">Home</a></li>
+            <li>Donor Gives Medicine Info</li>
+          </ol>
+        </div>
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+    <br>
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>All Medicine Info List!</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        {% if not donor_medicine_info %}
+                            <div>No medicine history is available! </div>
+                        {% else %}
+                            <table class="table" id="datatable-buttons"  style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S. No.</th>
+                                        <th>Username</th>
+                                        <th>Medicine Name </th>
+                                        <th>Medicine Type </th>
+                                        <th>No. Of Medicine </th>
+                                        <th>Medicine MG </th>
+                                        <th>Medicine Expiry Date </th>
+                                        <th>Donor Location </th>
+                                        <th>Collected </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     {% for donor_medicine_info in donor_medicine_info %}
+                                        <tr>
+                                          <th scope="row">{{ forloop.counter }}</th>
+                                          <th>{{ donor_medicine_info.username }}</th>
+                                          <td>{{ donor_medicine_info.medicine_name }}</td>
+                                          <td>{{ donor_medicine_info.medicine_type }}</td>
+                                          <td>{{ donor_medicine_info.number_of_medicine }}</td>
+                                          <td>{{ donor_medicine_info.mg }}</td>
+                                          <td>{{ donor_medicine_info.expiry_date }}</td>
+                                          <td>{{ donor_medicine_info.location }}</td>
+                                          <td>
+                                              {% if donor_medicine_info.is_collected %}
+                                                Yes Collected
+                                              {% else %}
+                                                No Collected
+                                              {% endif %}
+                                          </td>
+                                        </tr>
+                                     {% endfor %}
+                                </tbody>
+                            </table>
+                            {% if donor_medicine_info.has_other_pages %}
+                                    <nav aria-label="event-pagination" id="pagination">
+                                        <ul class="pagination">
+                                            {% if donor_medicine_info.has_previous %}
+                                              <li class="page-item"><a href="?page={{ donor_medicine_info.previous_page_number }}" class="page-link">&laquo;</a></li>
+                                            {% else %}
+                                              <li class="page-item disabled" ><span class="page-link">&laquo;</span></li>
+                                            {% endif %}
+                                            {% for i in donor_medicine_info.paginator.page_range %}
+                                              {% if donor_medicine_info.number == i %}
+                                                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                                              {% else %}
+                                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                              {% endif %}
+                                            {% endfor %}
+                                            {% if donor_medicine_info.has_next %}
+                                              <li class="page-item"><a class="page-link" href="?page={{ donor_medicine_info.next_page_number }}">&raquo;</a></li>
+                                            {% else %}
+                                              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

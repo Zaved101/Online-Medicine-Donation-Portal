@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+
+<section style="background-image: url({% static 'assets/img/bbb.jpg' %}); ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="text-light"> <strong>Welcome to Online Medicine Donation Portal</strong> </h1>
+                  <h2 class="text-secondary">The aim and objective of this medicine donation project are to prepare a portal
+                      for the collection of unused medicine for further utilization by a needy person.</h2> <br>
+                  <a href="{% url 'base' %}" class="btn btn-info">Get Started</a>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
+</section><!-- End Hero -->
+{% endblock %}

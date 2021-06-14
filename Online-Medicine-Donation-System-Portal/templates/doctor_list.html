@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Doctor List Page</h2>
+          <ol>
+            <li><a href="{% url 'base' %}">Home</a></li>
+            <li>Doctor List</li>
+          </ol>
+        </div>
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+    <br>
+<section id="doctors" class="doctors">
+      <div class="container">
+        <div class="section-title">
+          <h2>Doctors</h2>
+          <p></p>
+        </div>
+
+        <div class="row">
+            {% for doctor in doctor %}
+                  <div class="col-lg-6">
+                    <div class="member d-flex align-items-start">
+                      <div class="pic"><img src="{{ doctor.image.url }}" class="img-fluid" alt=""></div>
+                      <div class="member-info">
+                        <h4>{{ doctor.username }}</h4>
+                        <p>{{ doctor.email }}</p>
+                        <div class="social">
+                          <a href=""><i class="ri-twitter-fill"></i></a>
+                          <a href=""><i class="ri-facebook-fill"></i></a>
+                          <a href=""><i class="ri-instagram-fill"></i></a>
+                          <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            {% endfor %}
+        </div>
+      </div>
+    </section>
+
+{% endblock content %}

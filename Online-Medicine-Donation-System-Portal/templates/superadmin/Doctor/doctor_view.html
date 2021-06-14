@@ -1,0 +1,62 @@
+{% extends 'superadmin/index.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<table class="table table-bordered">
+    <img src="{{ doctor.image.url }}">
+  <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="row">1</th>
+    </tr>
+    <tr>
+        <th scope="col">User Name</th>
+        <th scope="row">{{ doctor.username }}</th>
+    </tr>
+    <tr>
+        <th scope="col">First Name</th>
+        <th scope="row">{{ doctor.first_name }}</th>
+    </tr>
+    <tr>
+        <th scope="col">Last Name</th>
+        <th scope="row">{{ doctor.last_name }}</th>
+    </tr>
+    <tr>
+        <th scope="col">Email</th>
+        <th scope="row">{{ doctor.email }}</th>
+    </tr>
+    <tr>
+        <th scope="col">Phone Number</th>
+        <th scope="row">{{ doctor.phone_number }}</th>
+    </tr>
+    <tr>
+        <th scope="col">Address</th>
+        <th scope="row">{{ doctor.address }}</th>
+    </tr>
+    <tr>
+        <th scope="col">Specialist</th>
+        <th scope="row">
+            {% for specialist in doctor.specialist.all %}
+                     {{ specialist.name }}<br>
+            {% endfor %}
+        </th>
+    </tr>
+    <tr>
+        <th scope="col">Degree</th>
+        <th scope="row">
+            {% for degree in doctor.degree.all %}
+                     {{ degree.degree }}<br>
+            {% endfor %}
+        </th>
+    </tr>
+    <tr>
+        <th colspan="2"><a  class="btn btn-primary" href="{% url 'list_doctor' %}">Back Doctor List</a></th>
+
+    </tr>
+  </thead>
+</table>
+
+{% endblock content %}

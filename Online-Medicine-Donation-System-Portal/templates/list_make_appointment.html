@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+<!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>All Appointment Info</h2>
+          <ol>
+            <li><a href="{% url 'base' %}">Home</a></li>
+            <li>View All Appointment Info</li>
+          </ol>
+        </div>
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+    <br>
+
+<div class="col-md-16 col-sm-16 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>All Appointment Info List!</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-16">
+                    <div class="card-box table-responsive">
+                        {% if not appointment %}
+                            <div>No Appointment Info Here! </div>
+                        {% else %}
+                            <table class="table" id="datatable-buttons"  style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S. No.</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone Number  </th>
+                                        <th>Date  </th>
+                                        <th>Doctor Name </th>
+                                        <th>Message </th>
+                                        <th>Is Check </th>
+                                        <th>View Prescription</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     {% for appointment in appointment %}
+                                        <tr>
+                                          <th scope="row">{{ forloop.counter }}</th>
+                                          <th>{{ appointment.name }}</th>
+                                          <td>{{ appointment.email }}</td>
+                                          <td>{{ appointment.phone }}</td>
+                                          <td>{{ appointment.date }}</td>
+                                          <td>{{ appointment.doctor }}</td>
+                                          <td>{{ appointment.message }}</td>
+                                          <td>
+                                              {% if appointment.is_check %}
+                                                Yes Checked
+                                              {% else %}
+                                                No Checked
+                                              {% endif %}
+                                          </td>
+                                          <td>
+                                                <a href="{% url 'doctor_view_prescription' appointment.id %}" class="btn btn-success"> View Prescription</a>
+                                          </td>
+                                        </tr>
+                                     {% endfor %}
+                                </tbody>
+                            </table>
+                            {% if appointment.has_other_pages %}
+                                    <nav aria-label="event-pagination" id="pagination">
+                                        <ul class="pagination">
+                                            {% if appointment.has_previous %}
+                                              <li class="page-item"><a href="?page={{ appointment.previous_page_number }}" class="page-link">&laquo;</a></li>
+                                            {% else %}
+                                              <li class="page-item disabled" ><span class="page-link">&laquo;</span></li>
+                                            {% endif %}
+                                            {% for i in appointment.paginator.page_range %}
+                                              {% if appointment.number == i %}
+                                                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                                              {% else %}
+                                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                              {% endif %}
+                                            {% endfor %}
+                                            {% if appointment.has_next %}
+                                              <li class="page-item"><a class="page-link" href="?page={{ appointment.next_page_number }}">&raquo;</a></li>
+                                            {% else %}
+                                              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

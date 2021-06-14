@@ -1,0 +1,43 @@
+{% extends 'superadmin/index.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<table class="table table-bordered">
+    <img src="{{ agent.image.url }}">
+  <thead>
+
+    <tr>
+        <th scope="col">User Name</th>
+        <th scope="row">{{ agent.username }}</th>
+    </tr>
+    <tr>
+        <th scope="col">First Name</th>
+        <th scope="row">{{ agent.first_name }}</th>
+    </tr>
+    <tr>
+        <th scope="col">Last Name</th>
+        <th scope="row">{{ agent.last_name }}</th>
+    </tr>
+    <tr>
+        <th scope="col">Email</th>
+        <th scope="row">{{ agent.email }}</th>
+    </tr>
+    <tr>
+        <th scope="col">Phone Number</th>
+        <th scope="row">{{ agent.phone_number }}</th>
+    </tr>
+    <tr>
+        <th scope="col">Address</th>
+        <th scope="row">{{ agent.address }}</th>
+    </tr>
+
+    <tr>
+        <th colspan="2"><a  class="btn btn-primary" href="{% url 'list_agent' %}">Back Agent List</a></th>
+    </tr>
+  </thead>
+</table>
+
+{% endblock content %}

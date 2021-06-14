@@ -1,0 +1,109 @@
+{% extends 'superadmin/index.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>All Medicine Info List!</h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        {% if not medicine_info %}
+                            <div>No Medicine Info Here !</div>
+                        {% else %}
+                            <table class="table" id="datatable-buttons"  style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S. No.</th>
+                                        <th>Username</th>
+                                        <th>Medicine Name </th>
+                                        <th>Medicine Type </th>
+                                        <th>No. Of Medicine </th>
+                                        <th>Medicine MG </th>
+                                        <th>Medicine Expiry Date </th>
+                                        <th>Donor Location </th>
+                                        <th>Collected </th>
+                                        <th>Change Collected Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     {% for medicine_info in medicine_info %}
+                                        <tr>
+                                          <th scope="row">{{ forloop.counter }}</th>
+                                          <th>{{ medicine_info.username }}</th>
+                                          <td>{{ medicine_info.medicine_name }}</td>
+                                          <td>{{ medicine_info.medicine_type }}</td>
+                                          <td>{{ medicine_info.number_of_medicine }}</td>
+                                          <td>{{ medicine_info.mg }}</td>
+                                          <td>{{ medicine_info.expiry_date }}</td>
+                                          <td>
+                                               {% if medicine_info.username.is_superuser %}
+                                                    No Location Needed. This is Super Admin Added
+                                               {% else %}
+                                                    {{ medicine_info.location }}
+                                               {% endif %}
+                                          </td>
+                                          <td>
+                                              {% if medicine_info.username.is_superuser %}
+                                                    Yes Collected
+                                              {% elif medicine_info.username.is_donor and medicine_info.is_collected %}
+                                                    Yes Collected
+                                              {% else %}
+                                                    No Collected
+                                              {% endif %}
+                                          </td>
+                                          <td>
+                                              {% if medicine_info.username.is_superuser %}
+                                                    Already Collected
+                                              {% elif medicine_info.username.is_donor and medicine_info.is_collected %}
+                                                    Already Collected
+                                              {% else %}
+                                                    <a href="{% url 'agent_is_collected_status_change' medicine_info.id %}" class="btn btn-success">Change Status</a>
+                                              {% endif %}
+                                          </td>
+                                        </tr>
+                                     {% endfor %}
+                                </tbody>
+                            </table>
+                            {% if medicine_info.has_other_pages %}
+                                    <nav aria-label="event-pagination" id="pagination">
+                                        <ul class="pagination">
+                                            {% if medicine_info.has_previous %}
+                                              <li class="page-item"><a href="?page={{ medicine_info.previous_page_number }}" class="page-link">&laquo;</a></li>
+                                            {% else %}
+                                              <li class="page-item disabled" ><span class="page-link">&laquo;</span></li>
+                                            {% endif %}
+                                            {% for i in medicine_info.paginator.page_range %}
+                                              {% if medicine_info.number == i %}
+                                                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                                              {% else %}
+                                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                              {% endif %}
+                                            {% endfor %}
+                                            {% if medicine_info.has_next %}
+                                              <li class="page-item"><a class="page-link" href="?page={{ medicine_info.next_page_number }}">&raquo;</a></li>
+                                            {% else %}
+                                              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

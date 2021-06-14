@@ -1,0 +1,75 @@
+{% extends 'superadmin/index.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>All Donor <small>LIST</small></h2>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        {% if not donor %}
+                            <div>No donor Here !</div>
+                        {% else %}
+                            <table class="table" id="datatable-buttons"  style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>S. No.</th>
+                                        <th>Donor Name </th>
+                                        <th>Phone Number</th>
+                                        <th>Email </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     {% for donor in donor %}
+                                        <tr>
+                                          <th scope="row">{{ forloop.counter }}</th>
+                                          <td>{{ donor.username }}</td>
+                                          <td>{{ donor.phone_number }}</td>
+                                          <td>{{ donor.email }}</td>
+                                        </tr>
+                                     {% endfor %}
+                                </tbody>
+                            </table>
+                            {% if donor.has_other_pages %}
+                                    <nav aria-label="event-pagination" id="pagination">
+                                        <ul class="pagination">
+                                            {% if donor.has_previous %}
+                                              <li class="page-item"><a href="?page={{ donor.previous_page_number }}" class="page-link">&laquo;</a></li>
+                                            {% else %}
+                                              <li class="page-item disabled" ><span class="page-link">&laquo;</span></li>
+                                            {% endif %}
+                                            {% for i in donor.paginator.page_range %}
+                                              {% if donor.number == i %}
+                                                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                                              {% else %}
+                                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                              {% endif %}
+                                            {% endfor %}
+                                            {% if donor.has_next %}
+                                              <li class="page-item"><a class="page-link" href="?page={{ donor.next_page_number }}">&raquo;</a></li>
+                                            {% else %}
+                                              <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                            {% endif %}
+                                        </ul>
+                                    </nav>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
